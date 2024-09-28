@@ -9,8 +9,10 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
+        "neon-red": "#FF006E",
+      },
+      backgroundImage: {
+        "gradient-navbar": "linear-gradient(to right, #630000 40%, #cc1a1a)",
       },
     },
   },

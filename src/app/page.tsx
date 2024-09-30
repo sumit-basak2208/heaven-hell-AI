@@ -12,7 +12,7 @@ export default function Home() {
           id="heaven"
         >
           <div className="px-4 flex-grow scroll-smooth space-y-2">
-            <Message message="How can I help you??" isBot={false} />
+            <Message message="How can I help you??" isBot={false} isHeaven={true}/>
           </div>
         </section>
         <section
@@ -20,7 +20,7 @@ export default function Home() {
           id="hell"
         >
           <div className="px-4 flex-grow scroll-smooth space-y-2">
-            <Message message="How can I help you??" isBot={false} />
+            <Message message="How can I help you??" isBot={false} isHeaven={false}/>
           </div>
         </section>
       </div>

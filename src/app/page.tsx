@@ -1,26 +1,118 @@
+"use client";
 import Image from "next/image";
 import hhBg from "./assets/hh-bg.jpg";
 import Message from "@/components/Message";
+import { useEffect, useState } from "react";
+import { Message as Msg } from "@/types/message";
 
 export default function Home() {
+  const [heavenMessage, setHeavenMessage] = useState<Msg[]>();
+  const [hellMessage, setHellMessage] = useState<Msg[]>();
+
+  useEffect(() => {
+    getData();
+  }, []);
+
+  const getData = async () => {
+    setHeavenMessage([
+      { message: "Hello, how can I assist you today?", isBot: true },
+      {
+        message: "I'm looking for information on cloud services.",
+        isBot: false,
+      },
+      {
+        message:
+          "Cloud services help you store and manage data on remote servers.",
+        isBot: true,
+      },
+      {
+        message: "Can you provide more details on storage options?",
+        isBot: false,
+      },
+      {
+        message:
+          "Sure! There are options like block storage, object storage, and file storage.",
+        isBot: true,
+      },
+      { message: "Which one is best for large data archiving?", isBot: false },
+      {
+        message:
+          "For large data archiving, object storage is typically the best option.",
+        isBot: true,
+      },
+      { message: "Great! How can I get started?", isBot: false },
+      {
+        message:
+          "You can begin by selecting a cloud provider and creating an account.",
+        isBot: true,
+      },
+      { message: "Thanks for the help!", isBot: false },
+    ]);
+    setHellMessage([
+      { message: "Hello, how can I assist you today?", isBot: true },
+      {
+        message: "I'm looking for information on cloud services.",
+        isBot: false,
+      },
+      {
+        message:
+          "Cloud services help you store and manage data on remote servers.",
+        isBot: true,
+      },
+      {
+        message: "Can you provide more details on storage options?",
+        isBot: false,
+      },
+      {
+        message:
+          "Sure! There are options like block storage, object storage, and file storage.",
+        isBot: true,
+      },
+      { message: "Which one is best for large data archiving?", isBot: false },
+      {
+        message:
+          "For large data archiving, object storage is typically the best option.",
+        isBot: true,
+      },
+      { message: "Great! How can I get started?", isBot: false },
+      {
+        message:
+          "You can begin by selecting a cloud provider and creating an account.",
+        isBot: true,
+      },
+      { message: "Thanks for the help!", isBot: false },
+    ]);
+  };
   return (
     <main className="mt-[49px] text-white">
       <div className="flex relative">
         <Image src={hhBg} fill alt="bg" className="opacity-50" />
         <section
-          className="w-[50%] overflow-auto h-[calc(100dvh-109px)] py-3 relative z-10"
+          className="w-[50%] overflow-auto h-[calc(100dvh-109px)] py-3 relative z-10 scrollbar scrollbar-none scrollbar-track-none"
           id="heaven"
         >
           <div className="px-4 flex-grow scroll-smooth space-y-2">
-            <Message message="How can I help you??" isBot={false} isHeaven={true}/>
+            {heavenMessage?.map((ele) => (
+              <Message
+                message={ele.message}
+                isBot={ele.isBot}
+                isHeaven={true}
+              />
+            ))}
           </div>
         </section>
         <section
-          className="w-[50%] overflow-auto h-[calc(100dvh-109px)] py-3 relative z-10 ml-4"
+          className="w-[50%] overflow-auto h-[calc(100dvh-109px)] py-3 relative z-10 ml-4 scrollbar scrollbar-none scrollbar-track-none"
           id="hell"
         >
           <div className="px-4 flex-grow scroll-smooth space-y-2">
-            <Message message="How can I help you??" isBot={false} isHeaven={false}/>
+            {hellMessage?.map((ele) => (
+              <Message
+                message={ele.message}
+                isBot={ele.isBot}
+                isHeaven={false}
+              />
+            ))}
           </div>
         </section>
       </div>

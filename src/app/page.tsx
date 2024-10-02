@@ -4,84 +4,29 @@ import hhBg from "./assets/hh-bg.jpg";
 import Message from "@/components/Message";
 import { useEffect, useState } from "react";
 import { Message as Msg } from "@/types/message";
+import { useNotifications } from "reapop";
 
 export default function Home() {
   const [heavenMessage, setHeavenMessage] = useState<Msg[]>();
   const [hellMessage, setHellMessage] = useState<Msg[]>();
+
+  const { notify } = useNotifications();
 
   useEffect(() => {
     getData();
   }, []);
 
   const getData = async () => {
-    setHeavenMessage([
-      { message: "Hello, how can I assist you today?", isBot: true },
-      {
-        message: "I'm looking for information on cloud services.",
-        isBot: false,
-      },
-      {
-        message:
-          "Cloud services help you store and manage data on remote servers.",
-        isBot: true,
-      },
-      {
-        message: "Can you provide more details on storage options?",
-        isBot: false,
-      },
-      {
-        message:
-          "Sure! There are options like block storage, object storage, and file storage.",
-        isBot: true,
-      },
-      { message: "Which one is best for large data archiving?", isBot: false },
-      {
-        message:
-          "For large data archiving, object storage is typically the best option.",
-        isBot: true,
-      },
-      { message: "Great! How can I get started?", isBot: false },
-      {
-        message:
-          "You can begin by selecting a cloud provider and creating an account.",
-        isBot: true,
-      },
-      { message: "Thanks for the help!", isBot: false },
-    ]);
-    setHellMessage([
-      { message: "Hello, how can I assist you today?", isBot: true },
-      {
-        message: "I'm looking for information on cloud services.",
-        isBot: false,
-      },
-      {
-        message:
-          "Cloud services help you store and manage data on remote servers.",
-        isBot: true,
-      },
-      {
-        message: "Can you provide more details on storage options?",
-        isBot: false,
-      },
-      {
-        message:
-          "Sure! There are options like block storage, object storage, and file storage.",
-        isBot: true,
-      },
-      { message: "Which one is best for large data archiving?", isBot: false },
-      {
-        message:
-          "For large data archiving, object storage is typically the best option.",
-        isBot: true,
-      },
-      { message: "Great! How can I get started?", isBot: false },
-      {
-        message:
-          "You can begin by selecting a cloud provider and creating an account.",
-        isBot: true,
-      },
-      { message: "Thanks for the help!", isBot: false },
-    ]);
+    try {
+      const res = await fetch("api/v1/message");
+      const data = await res.json();
+      if (data.success === true) {
+        setHeavenMessage(data.heaven);
+        setHellMessage(data.hell);
+      }
+    } catch (err: unknown) {
+      notify("Failed to feetch data!", "error");
+    }
   };
   return (
     <main className="mt-[49px] text-white">

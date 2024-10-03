@@ -2,6 +2,11 @@ import Image from "next/image";
 import angelLogo from "../app/assets/angel-logo.png";
 import devilLogo from "../app/assets/devil-logo.png";
 import userLogo from "../app/assets/user-logo.png";
+import {
+  GoogleGenerativeAI,
+  HarmBlockThreshold,
+  HarmCategory,
+} from "@google/generative-ai";
 
 export default function Message({
   message,
@@ -16,7 +21,7 @@ export default function Message({
     <div
       id="lst-msg"
       className={`flex ${
-        !isBot ? "justify-right flex-row-reverse": "justify-start mr-8"
+        !isBot ? "justify-right flex-row-reverse" : "justify-start mr-8"
       } gap-2`}
     >
       <div className="border border-zinc-300 h-5 w-5 bg-white rounded-full overflow-hidden -mt-1">

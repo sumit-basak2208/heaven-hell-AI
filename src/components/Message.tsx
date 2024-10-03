@@ -2,11 +2,6 @@ import Image from "next/image";
 import angelLogo from "../app/assets/angel-logo.png";
 import devilLogo from "../app/assets/devil-logo.png";
 import userLogo from "../app/assets/user-logo.png";
-import {
-  GoogleGenerativeAI,
-  HarmBlockThreshold,
-  HarmCategory,
-} from "@google/generative-ai";
 
 export default function Message({
   message,

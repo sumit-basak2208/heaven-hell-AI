@@ -2,13 +2,17 @@
 import Image from "next/image";
 import hhBg from "./assets/hh-bg.jpg";
 import Message from "@/components/Message";
-import { useEffect, useState } from "react";
+import { SyntheticEvent, useEffect, useState } from "react";
 import { Message as Msg } from "@/types/message";
 import { useNotifications } from "reapop";
+import { heavenBot } from "@/utils/heaven";
+import { hellBot } from "@/utils/hell";
 
 export default function Home() {
-  const [heavenMessage, setHeavenMessage] = useState<Msg[]>();
-  const [hellMessage, setHellMessage] = useState<Msg[]>();
+  const [heavenMessages, setHeavenMessages] = useState<Msg[]>();
+  const [hellMessages, setHellMessages] = useState<Msg[]>();
+
+  const [prompt, setPrompt] = useState<string>("");
 
   const { notify } = useNotifications();
 
@@ -21,10 +25,34 @@ export default function Home() {
       const res = await fetch("api/v1/message");
       const data = await res.json();
       if (data.success === true) {
-        setHeavenMessage(data.heaven);
-        setHellMessage(data.hell);
+        setHeavenMessages(data.heaven.reverse());
+        setHellMessages(data.hell.reverse());
       }
     } catch (err: unknown) {
+      notify("Failed to fetch data!", "error");
+    }
+  };
+
+  const onFormSubmit = async (ev: SyntheticEvent) => {
+    ev.preventDefault();
+    try {
+      setPrompt("");
+      const [hellRes, heavenRes] = await Promise.all([
+        hellBot(prompt, hellMessages ?? []),
+        heavenBot(prompt, hellMessages ?? []),
+      ]);
+      setHeavenMessages([
+        ...(heavenMessages ?? []),
+        { message: prompt, isBot: false },
+        { message: heavenRes, isBot: true },
+      ]);
+      setHellMessages([
+        ...(hellMessages ?? []),
+        { message: prompt, isBot: false },
+        { message: hellRes, isBot: true },
+      ]);
+    } catch (err) {
+      console.log(err);
       notify("Failed to feetch data!", "error");
     }
   };
@@ -37,7 +65,7 @@ export default function Home() {
           id="heaven"
         >
           <div className="px-4 flex-grow scroll-smooth space-y-2">
-            {heavenMessage?.map((ele) => (
+            {heavenMessages?.map((ele) => (
               <Message
                 message={ele.message}
                 isBot={ele.isBot}
@@ -51,7 +79,7 @@ export default function Home() {
           id="hell"
         >
           <div className="px-4 flex-grow scroll-smooth space-y-2">
-            {hellMessage?.map((ele) => (
+            {hellMessages?.map((ele) => (
               <Message
                 message={ele.message}
                 isBot={ele.isBot}
@@ -61,12 +89,18 @@ export default function Home() {
           </div>
         </section>
       </div>
-      <form className="px-10 py-2 pt-3 bg-black border-t border-white">
+      <form
+        className="px-10 py-2 pt-3 bg-black border-t border-white"
+        onSubmit={onFormSubmit}
+      >
         <div className="rounded-full flex border-white bg-black text-white border w-full">
           <textarea
             className="px-2 py-1 rounded-full bg-black text-white flex-1 border-0 outline-0"
             placeholder="Enter text..."
             rows={1}
+            onChange={(ev) => setPrompt(ev.target.value)}
+            value={prompt}
+            required
           />
           <button className="p-2 rounded-full">
             <svg

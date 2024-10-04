@@ -28,7 +28,7 @@ export default function Message({
         />
       </div>
       <div
-        className="max-w-[calc(100%-50px)] mb-3 rounded-b-lg rounded-tr-lg py-3 px-4"
+        className={`max-w-[calc(100%-50px)] mb-3 rounded-b-lg rounded-t${isBot?"r": "l"}-lg py-3 px-4`}
         style={{ backgroundColor: "rgb(61, 68, 85)", color: "white" }}
       >
         <div className="flex flex-col items-start break-words">

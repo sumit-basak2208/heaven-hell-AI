@@ -2,7 +2,7 @@
 import Image from "next/image";
 import hhBg from "./assets/hh-bg.jpg";
 import Message from "@/components/Message";
-import { SyntheticEvent, useEffect, useState } from "react";
+import { SyntheticEvent, useEffect, useRef, useState } from "react";
 import { Message as Msg } from "@/types/message";
 import { useNotifications } from "reapop";
 import { heavenBot } from "@/utils/heaven";
@@ -12,9 +12,20 @@ export default function Home() {
   const [heavenMessages, setHeavenMessages] = useState<Msg[]>();
   const [hellMessages, setHellMessages] = useState<Msg[]>();
 
+  const promptRef = useRef<HTMLTextAreaElement>(null);
+
   const [prompt, setPrompt] = useState<string>("");
 
   const { notify } = useNotifications();
+
+  useEffect(() => {
+    const handleKeyDown = () => {
+      if (promptRef.current) {
+        promptRef.current.focus();
+      }
+    };
+    globalThis.addEventListener("keydown", handleKeyDown);
+  });
 
   useEffect(() => {
     getData();
@@ -35,6 +46,8 @@ export default function Home() {
 
   const onFormSubmit = async (ev: SyntheticEvent) => {
     ev.preventDefault();
+    if (!prompt.trim())
+      return;
     try {
       setPrompt("");
       const [hellRes, heavenRes] = await Promise.all([
@@ -62,6 +75,16 @@ export default function Home() {
     } catch (err) {
       console.log(err);
       notify("Failed to feetch data!", "error");
+    }
+  };
+
+  const onPromptKeydown = (ev: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (ev.key === "Enter" && !ev.shiftKey) {
+      ev.preventDefault();
+      const submitEvent = new Event(
+        "submit"
+      ) as unknown as React.FormEvent<HTMLFormElement>;
+      onFormSubmit(submitEvent);
     }
   };
   return (
@@ -103,10 +126,12 @@ export default function Home() {
       >
         <div className="rounded-full flex border-white bg-black text-white border w-full">
           <textarea
+            ref={promptRef}
             className="px-2 py-1 rounded-full bg-black text-white flex-1 border-0 outline-0"
             placeholder="Enter text..."
             rows={1}
             onChange={(ev) => setPrompt(ev.target.value)}
+            onKeyDown={onPromptKeydown}
             value={prompt}
             required
           />

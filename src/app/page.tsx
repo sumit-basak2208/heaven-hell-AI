@@ -25,8 +25,8 @@ export default function Home() {
       const res = await fetch("api/v1/message");
       const data = await res.json();
       if (data.success === true) {
-        setHeavenMessages(data.heaven.reverse());
-        setHellMessages(data.hell.reverse());
+        setHeavenMessages(data.heaven);
+        setHellMessages(data.hell);
       }
     } catch (err: unknown) {
       notify("Failed to fetch data!", "error");
@@ -42,15 +42,23 @@ export default function Home() {
         heavenBot(prompt, hellMessages ?? []),
       ]);
       setHeavenMessages([
-        ...(heavenMessages ?? []),
         { message: prompt, isBot: false },
         { message: heavenRes, isBot: true },
+        ...(heavenMessages ?? []),
       ]);
       setHellMessages([
-        ...(hellMessages ?? []),
         { message: prompt, isBot: false },
         { message: hellRes, isBot: true },
+        ...(hellMessages ?? []),
       ]);
+      fetch("api/v1/message", {
+        method: "POST",
+        body: JSON.stringify({
+          prompt: prompt,
+          hellMessage: hellRes,
+          heavenMessage: heavenRes,
+        }),
+      });
     } catch (err) {
       console.log(err);
       notify("Failed to feetch data!", "error");

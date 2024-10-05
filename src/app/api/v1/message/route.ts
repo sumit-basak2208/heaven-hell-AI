@@ -28,18 +28,35 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     const reqBody = await request.json();
-    const { message, isBot, isHeaven } = reqBody;
-    const newMessage = new Message({
-      message,
-      isBot,
-      isHeaven,
+    const { prompt, heavenMessage, hellMessage } = reqBody;
+    console.log(reqBody);
+    const userHellMsg = new Message({
+      message: prompt,
+      isBot: false,
+      isHeaven: false,
     });
-    await newMessage.save();
+    const hellMsg = new Message({
+      message: hellMessage,
+      isBot: true,
+      isHeaven: false,
+    });
+    const userHeavenMsg = new Message({
+      message: prompt,
+      isBot: false,
+      isHeaven: true,
+    });
+    const heaveneMsg = new Message({
+      message: heavenMessage,
+      isBot: true,
+      isHeaven: true,
+    });
+    await Promise.all([userHeavenMsg.save(), userHellMsg.save()]);
+    await Promise.all([heaveneMsg.save(), hellMsg.save()]);
+
     return NextResponse.json({
       message: "Message added succesfully",
       success: true,
     });
-    return NextResponse.json({});
   } catch (err: unknown) {
     console.log(err);
     NextResponse.json(

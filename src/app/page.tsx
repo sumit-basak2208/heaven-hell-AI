@@ -54,14 +54,14 @@ export default function Home() {
         heavenBot(prompt, hellMessages ?? []),
       ]);
       setHeavenMessages([
+        ...(heavenMessages ?? []),
         { message: prompt, isBot: false },
         { message: heavenRes, isBot: true },
-        ...(heavenMessages ?? []),
       ]);
       setHellMessages([
+        ...(hellMessages ?? []),
         { message: prompt, isBot: false },
         { message: hellRes, isBot: true },
-        ...(hellMessages ?? []),
       ]);
       fetch("api/v1/message", {
         method: "POST",

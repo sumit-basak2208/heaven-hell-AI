@@ -11,7 +11,7 @@ import { hellBot } from "@/utils/hell";
 export default function Home() {
   const [heavenMessages, setHeavenMessages] = useState<Msg[]>();
   const [hellMessages, setHellMessages] = useState<Msg[]>();
-
+  const [active, setActive] = useState("hell");
   const promptRef = useRef<HTMLTextAreaElement>(null);
 
   const [prompt, setPrompt] = useState<string>("");
@@ -46,8 +46,7 @@ export default function Home() {
 
   const onFormSubmit = async (ev: SyntheticEvent) => {
     ev.preventDefault();
-    if (!prompt.trim())
-      return;
+    if (!prompt.trim()) return;
     try {
       setPrompt("");
       const [hellRes, heavenRes] = await Promise.all([
@@ -89,10 +88,14 @@ export default function Home() {
   };
   return (
     <main className="mt-[49px] text-white">
+      <div className="flex">
+        <button onClick={ev => setActive("heaven")} className="flex-1 text-lg py-3">Heaven</button>
+        <button onClick={ev => setActive("hell")} className="flex-1 text-lg py-3">Hell</button>
+      </div>
       <div className="flex relative">
         <Image src={hhBg} fill alt="bg" className="opacity-50" />
         <section
-          className="w-[50%] overflow-auto h-[calc(100dvh-109px)] py-3 relative z-10 scrollbar scrollbar-none scrollbar-track-none"
+          className={`md:block ${active == "heaven"? "block": "hidden"} flex-1 overflow-auto h-[calc(100dvh-170px)] py-3 relative z-10 scrollbar scrollbar-none scrollbar-track-none`}
           id="heaven"
         >
           <div className="px-4 flex-grow scroll-smooth space-y-2">
@@ -106,7 +109,7 @@ export default function Home() {
           </div>
         </section>
         <section
-          className="w-[50%] overflow-auto h-[calc(100dvh-109px)] py-3 relative z-10 ml-4 scrollbar scrollbar-none scrollbar-track-none"
+          className={`md:block ${active == "hell"? "block": "hidden"} flex-1 overflow-auto h-[calc(100dvh-170px)] py-3 relative z-10 ml-4 scrollbar scrollbar-none scrollbar-track-none`}
           id="hell"
         >
           <div className="px-4 flex-grow scroll-smooth space-y-2">

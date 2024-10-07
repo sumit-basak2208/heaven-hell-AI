@@ -15,6 +15,7 @@
     "next": "14.2.13",
     "react": "^18",
     "react-dom": "^18",
+    "react-markdown": "^9.0.1",
     "reapop": "^4.2.2",
     "tailwind-scrollbar": "^3.1.0"
   },

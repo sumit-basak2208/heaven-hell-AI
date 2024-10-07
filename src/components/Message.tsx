@@ -2,13 +2,14 @@ import Image from "next/image";
 import angelLogo from "../app/assets/angel-logo.png";
 import devilLogo from "../app/assets/devil-logo.png";
 import userLogo from "../app/assets/user-logo.png";
+import Markdown from "react-markdown";
 
 export default function Message({
   message,
   isBot,
   isHeaven,
 }: {
-  message: String;
+  message: string;
   isBot: Boolean;
   isHeaven: Boolean;
 }) {
@@ -28,13 +29,15 @@ export default function Message({
         />
       </div>
       <div
-        className={`max-w-[calc(100%-50px)] mb-3 rounded-b-lg rounded-t${isBot?"r": "l"}-lg py-3 px-4`}
+        className={`max-w-[calc(100%-50px)] mb-3 rounded-b-lg rounded-t${
+          isBot ? "r" : "l"
+        }-lg py-3 px-4`}
         style={{ backgroundColor: "rgb(61, 68, 85)", color: "white" }}
       >
         <div className="flex flex-col items-start break-words">
           <div className="prose text-inherit text-left w-full break-words dark:prose-invert text-sm">
             <div>
-              <p>{message}</p>
+              <Markdown>{message}</Markdown>
             </div>
           </div>
         </div>

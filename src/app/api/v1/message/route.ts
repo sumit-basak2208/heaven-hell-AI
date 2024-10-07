@@ -29,7 +29,6 @@ export async function POST(request: NextRequest) {
   try {
     const reqBody = await request.json();
     const { prompt, heavenMessage, hellMessage } = reqBody;
-    console.log(reqBody);
     const userHellMsg = new Message({
       message: prompt,
       isBot: false,

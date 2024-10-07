@@ -49,18 +49,24 @@ export default function Home() {
     if (!prompt.trim()) return;
     try {
       setPrompt("");
+      setHeavenMessages((dt) => [
+        ...(dt ?? []),
+        { message: prompt, isBot: false },
+      ]);
+      setHellMessages((dt) => [
+        ...(dt ?? []),
+        { message: prompt, isBot: false },
+      ]);
       const [hellRes, heavenRes] = await Promise.all([
         hellBot(prompt, hellMessages ?? []),
-        heavenBot(prompt, hellMessages ?? []),
+        heavenBot(prompt, heavenMessages ?? []),
       ]);
-      setHeavenMessages([
+      setHeavenMessages((heavenMessages) => [
         ...(heavenMessages ?? []),
-        { message: prompt, isBot: false },
         { message: heavenRes, isBot: true },
       ]);
-      setHellMessages([
+      setHellMessages((hellMessages) => [
         ...(hellMessages ?? []),
-        { message: prompt, isBot: false },
         { message: hellRes, isBot: true },
       ]);
       fetch("api/v1/message", {
@@ -89,13 +95,25 @@ export default function Home() {
   return (
     <main className="mt-[49px] text-white">
       <div className="flex">
-        <button onClick={ev => setActive("heaven")} className="flex-1 text-lg py-3">Heaven</button>
-        <button onClick={ev => setActive("hell")} className="flex-1 text-lg py-3">Hell</button>
+        <button
+          onClick={(ev) => setActive("heaven")}
+          className="flex-1 text-lg py-3"
+        >
+          Heaven
+        </button>
+        <button
+          onClick={(ev) => setActive("hell")}
+          className="flex-1 text-lg py-3"
+        >
+          Hell
+        </button>
       </div>
       <div className="flex relative">
         <Image src={hhBg} fill alt="bg" className="opacity-50" />
         <section
-          className={`md:block ${active == "heaven"? "block": "hidden"} flex-1 overflow-auto h-[calc(100dvh-170px)] py-3 relative z-10 scrollbar scrollbar-none scrollbar-track-none`}
+          className={`md:block ${
+            active == "heaven" ? "block" : "hidden"
+          } flex-1 overflow-auto h-[calc(100dvh-170px)] py-3 relative z-10 scrollbar scrollbar-none scrollbar-track-none`}
           id="heaven"
         >
           <div className="px-4 flex-grow scroll-smooth space-y-2">
@@ -109,7 +127,9 @@ export default function Home() {
           </div>
         </section>
         <section
-          className={`md:block ${active == "hell"? "block": "hidden"} flex-1 overflow-auto h-[calc(100dvh-170px)] py-3 relative z-10 ml-4 scrollbar scrollbar-none scrollbar-track-none`}
+          className={`md:block ${
+            active == "hell" ? "block" : "hidden"
+          } flex-1 overflow-auto h-[calc(100dvh-170px)] py-3 relative z-10 ml-4 scrollbar scrollbar-none scrollbar-track-none`}
           id="hell"
         >
           <div className="px-4 flex-grow scroll-smooth space-y-2">

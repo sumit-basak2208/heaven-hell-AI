@@ -14,7 +14,11 @@ export default function Home() {
   const [active, setActive] = useState("hell");
   const promptRef = useRef<HTMLTextAreaElement>(null);
 
+  const hellMsgEnd = useRef<HTMLDivElement>(null);
+  const heavenMsgEnd = useRef<HTMLDivElement>(null);
+
   const [prompt, setPrompt] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(true);
 
   const { notify } = useNotifications();
 
@@ -25,11 +29,20 @@ export default function Home() {
       }
     };
     globalThis.addEventListener("keydown", handleKeyDown);
-  });
+  }, []);
 
   useEffect(() => {
     getData();
   }, []);
+
+  useEffect(() => {
+    hellMsgEnd.current?.scrollIntoView({ behavior: "smooth" });
+  }, [hellMessages]);
+
+  
+  useEffect(() => {
+    heavenMsgEnd.current?.scrollIntoView({ behavior: "smooth" });
+  }, [heavenMessages]);
 
   const getData = async () => {
     try {
@@ -124,6 +137,7 @@ export default function Home() {
                 isHeaven={true}
               />
             ))}
+            <div ref={heavenMsgEnd}></div>
           </div>
         </section>
         <section
@@ -140,6 +154,7 @@ export default function Home() {
                 isHeaven={false}
               />
             ))}
+            <div ref={hellMsgEnd}></div>
           </div>
         </section>
       </div>

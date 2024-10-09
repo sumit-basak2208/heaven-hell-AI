@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import hhBg from "./assets/hh-bg.jpg";
+import hhBg from "../assets/hh-bg.jpg";
 import Message from "@/components/Message";
 import { SyntheticEvent, useEffect, useRef, useState } from "react";
 import { Message as Msg } from "@/types/message";

@@ -8,7 +8,7 @@ export default function Navbar() {
   const session = useSession();
 
   return (
-    <nav className="absolute top-0 flex justify-between left-0 right-0 px-3 py-2 bg-black z-20 text-white shadow-lg border-b border-white">
+    <nav className="absolute top-0 flex justify-between left-0 w-[100vw] px-3 py-2 bg-black z-20 text-white shadow-lg border-b border-white">
       <div className="flex items-center gap-3">
         {/* <Image src={logo} width={30} height={30} alt="log" /> */}
         <h1 className="text-xl font-semibold mb-1">Hell Heaven AI</h1>

@@ -7,8 +7,13 @@ import { Message as Msg } from "@/types/message";
 import { useNotifications } from "reapop";
 import { heavenBot } from "@/utils/heaven";
 import { hellBot } from "@/utils/hell";
+import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 export default function Chat() {
+  const router = useRouter();
+  const session = useSession();
+
   const [heavenMessages, setHeavenMessages] = useState<Msg[]>();
   const [hellMessages, setHellMessages] = useState<Msg[]>();
   const [active, setActive] = useState("hell");
@@ -21,6 +26,13 @@ export default function Chat() {
   const [loading, setLoading] = useState<boolean>(true);
 
   const { notify } = useNotifications();
+
+  useEffect(() => {
+    if (session.status === "unauthenticated") {
+      notify("Please login first!!", "info");
+      router.push("/");
+    }
+  }, [session]);
 
   useEffect(() => {
     const handleKeyDown = () => {

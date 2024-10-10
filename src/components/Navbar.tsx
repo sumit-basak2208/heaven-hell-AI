@@ -1,8 +1,6 @@
 "use client";
-import Image from "next/image";
-import logo from "../app/assets/hh-logo.png";
 import { signIn, signOut, useSession } from "next-auth/react";
-import { ChevronDown, LogIn, LogOut } from "lucide-react";
+import { LogIn, LogOut } from "lucide-react";
 import Link from "next/link";
 
 export default function Navbar() {
@@ -16,12 +14,12 @@ export default function Navbar() {
       </div>
       <div className="flex items-center mr-1">
         {session.status === "authenticated" ? (
-          <button onClick={ ev => signOut()}  className="flex items-center text-lg font-semibold gap-1">
+          <button onClick={() => signOut}  className="flex items-center text-lg font-semibold gap-1">
             <span className="mb-1">Logout</span>
             <LogOut />
           </button>
         ) : (
-            <button onClick={ev => signIn("google") }  className="flex items-center text-lg font-semibold gap-1">
+            <button onClick={() => signIn("google") }  className="flex items-center text-lg font-semibold gap-1">
             <span className="mb-1">Login</span>
             <LogIn />
           </button>

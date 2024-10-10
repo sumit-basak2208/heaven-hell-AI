@@ -23,7 +23,7 @@ export default function Chat() {
   const heavenMsgEnd = useRef<HTMLDivElement>(null);
 
   const [prompt, setPrompt] = useState<string>("");
-  const [loading, setLoading] = useState<boolean>(true);
+  // const [loading, setLoading] = useState<boolean>(true);
 
   const { notify } = useNotifications();
 
@@ -63,7 +63,8 @@ export default function Chat() {
         setHeavenMessages(data.heaven);
         setHellMessages(data.hell);
       }
-    } catch (err: unknown) {
+    } catch (err) {
+      console.log(err);
       notify("Failed to fetch data!", "error");
     }
   };
@@ -120,13 +121,13 @@ export default function Chat() {
     <main className="mt-[49px] text-white">
       <div className="flex">
         <button
-          onClick={(ev) => setActive("heaven")}
+          onClick={() => setActive("heaven")}
           className="flex-1 text-lg py-3"
         >
           Heaven
         </button>
         <button
-          onClick={(ev) => setActive("hell")}
+          onClick={() => setActive("hell")}
           className="flex-1 text-lg py-3"
         >
           Hell
@@ -143,6 +144,7 @@ export default function Chat() {
           <div className="px-4 flex-grow scroll-smooth space-y-2">
             {heavenMessages?.map((ele) => (
               <Message
+                key={ele?._id}
                 message={ele.message}
                 isBot={ele.isBot}
                 isHeaven={true}
@@ -160,6 +162,7 @@ export default function Chat() {
           <div className="px-4 flex-grow scroll-smooth space-y-2">
             {hellMessages?.map((ele) => (
               <Message
+                key={ele?._id}
                 message={ele.message}
                 isBot={ele.isBot}
                 isHeaven={false}

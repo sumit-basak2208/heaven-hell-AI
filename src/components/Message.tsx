@@ -10,8 +10,8 @@ export default function Message({
   isHeaven,
 }: {
   message: string;
-  isBot: Boolean;
-  isHeaven: Boolean;
+  isBot: boolean;
+  isHeaven: boolean;
 }) {
   return (
     <div

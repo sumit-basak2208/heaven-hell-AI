@@ -4,7 +4,7 @@ import Message from "@/model/message.model";
 
 connect();
 
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
     const messages = await Message.find({});
     return NextResponse.json({

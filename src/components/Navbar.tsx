@@ -14,7 +14,7 @@ export default function Navbar() {
       </div>
       <div className="flex items-center mr-1">
         {session.status === "authenticated" ? (
-          <button onClick={() => signOut}  className="flex items-center text-lg font-semibold gap-1">
+          <button onClick={() => signOut()}  className="flex items-center text-lg font-semibold gap-1">
             <span className="mb-1">Logout</span>
             <LogOut />
           </button>

@@ -23,7 +23,7 @@ export default function Chat() {
   const heavenMsgEnd = useRef<HTMLDivElement>(null);
 
   const [prompt, setPrompt] = useState<string>("");
-  // const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(true);
 
   const { notify } = useNotifications();
 
@@ -57,6 +57,7 @@ export default function Chat() {
 
   const getData = async () => {
     try {
+      setLoading(true);
       const res = await fetch("api/v1/message");
       const data = await res.json();
       if (data.success === true) {
@@ -66,6 +67,8 @@ export default function Chat() {
     } catch (err) {
       console.log(err);
       notify("Failed to fetch data!", "error");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -82,6 +85,7 @@ export default function Chat() {
         ...(dt ?? []),
         { message: prompt, isBot: false },
       ]);
+      setLoading(true);
       const [hellRes, heavenRes] = await Promise.all([
         hellBot(prompt, hellMessages ?? []),
         heavenBot(prompt, heavenMessages ?? []),
@@ -105,6 +109,8 @@ export default function Chat() {
     } catch (err) {
       console.log(err);
       notify("Failed to feetch data!", "error");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -117,6 +123,7 @@ export default function Chat() {
       onFormSubmit(submitEvent);
     }
   };
+
   return (
     <main className="mt-[49px] text-white">
       <div className="flex">

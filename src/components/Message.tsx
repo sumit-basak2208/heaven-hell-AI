@@ -15,7 +15,6 @@ export default function Message({
 }) {
   return (
     <div
-      id="lst-msg"
       className={`flex ${
         !isBot ? "justify-right flex-row-reverse" : "justify-start mr-8"
       } gap-2`}

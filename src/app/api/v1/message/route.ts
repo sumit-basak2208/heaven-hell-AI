@@ -52,7 +52,6 @@ export async function POST(request: NextRequest) {
       );
     }
     const reqBody = await request.json();
-    console.log(`======================${email}=================================`)
     const { prompt, heavenMessage, hellMessage } = reqBody;
     const userHellMsg = new Message({
       message: prompt,

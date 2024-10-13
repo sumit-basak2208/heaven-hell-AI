@@ -19,7 +19,7 @@ export default function Navbar() {
             <LogOut />
           </button>
         ) : (
-            <button onClick={() => signIn("google") }  className="flex items-center text-lg font-semibold gap-1">
+            <button onClick={() => signIn("google", {callbackUrl: "/chat"}) }  className="flex items-center text-lg font-semibold gap-1">
             <span className="mb-1">Login</span>
             <LogIn />
           </button>

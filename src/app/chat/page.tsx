@@ -8,7 +8,7 @@ import { useNotifications } from "reapop";
 import { heavenBot } from "@/utils/heaven";
 import { hellBot } from "@/utils/hell";
 import { useRouter } from "next/navigation";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import angelLogo from "../assets/angel-logo.png";
 import devilLogo from "../assets/devil-logo.png";
 import BouncingDotLoader from "@/components/BouncingDotLoader";
@@ -34,6 +34,8 @@ export default function Chat() {
     if (session.status === "unauthenticated") {
       notify("Please login first!!", "info");
       router.push("/");
+    } else if (session.status === "authenticated") {
+      getData();
     }
   }, [session]);
 
@@ -44,10 +46,6 @@ export default function Chat() {
       }
     };
     globalThis.addEventListener("keydown", handleKeyDown);
-  }, []);
-
-  useEffect(() => {
-    getData();
   }, []);
 
   useEffect(() => {
@@ -63,6 +61,12 @@ export default function Chat() {
       setLoading(true);
       const res = await fetch("api/v1/message");
       const data = await res.json();
+      if (res.status == 401 && session.status) {
+        notify(data.error, "error");
+        signOut();
+        router.push("/");
+      }
+
       if (data.success === true) {
         setHeavenMessages(data.heaven);
         setHellMessages(data.hell);

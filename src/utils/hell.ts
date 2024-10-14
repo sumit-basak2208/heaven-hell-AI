@@ -57,7 +57,7 @@ export async function hellBot(message: string, history: Message[]) {
   try {
     const genAI = new GoogleGenerativeAI(process.env.NEXT_PUBLIC_GEMINI_KEY!);
     const model = genAI.getGenerativeModel({
-      model: "gemini-pro",
+      model: "gemini-1.5-flash-002",
       safetySettings: hellSafetySettings,
     });
     if (history.length > 1) {

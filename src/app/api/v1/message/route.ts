@@ -19,7 +19,7 @@ export async function GET() {
         }
       );
     }
-    const messages = await Message.find({ email: email }).sort([["createdAt", -1]]).limit(20);
+    const messages = await Message.find({ email: email }).sort([["createdAt", 1]]).limit(20);
     return NextResponse.json({
       hell: messages.filter((ele) => !ele.isHeaven),
       heaven: messages.filter((ele) => ele.isHeaven),

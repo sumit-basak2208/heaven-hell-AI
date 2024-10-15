@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import connect from "@/db/db";
 import Message from "@/model/message.model";
-import { getServerSession } from "next-auth";
 import { cookies } from "next/headers";
+import { Error } from "@/types/error";
 
 connect();
 
@@ -25,7 +25,8 @@ export async function GET() {
       heaven: messages.filter((ele) => ele.isHeaven),
       success: true,
     });
-  } catch (err: any) {
+  } catch (error: unknown) {
+    const err = error as Error;
     console.log(err.message);
     return NextResponse.json(
       {
@@ -84,7 +85,8 @@ export async function POST(request: NextRequest) {
       message: "Message added succesfully",
       success: true,
     });
-  } catch (err:any) {
+  } catch (error: unknown) {
+    const err = error as Error;
     console.log(err.message);
     NextResponse.json(
       {

@@ -53,11 +53,10 @@ export default function Chat() {
 
   useEffect(() => {
     hellMsgEnd.current?.scrollIntoView({ behavior: "smooth" });
-  }, [hellMessages]);
-
-  useEffect(() => {
-    heavenMsgEnd.current?.scrollIntoView({ behavior: "smooth" });
-  }, [heavenMessages]);
+    setTimeout(() => {
+      heavenMsgEnd.current?.scrollIntoView({ behavior: "smooth" });
+    }, 500);
+  }, [hellMessages, heavenMessages]);
 
   const getData = async () => {
     try {

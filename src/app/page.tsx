@@ -22,14 +22,21 @@ export default function Home() {
           offering balanced perspectives in a warm, professional environment.
         </h3>
         <div className="px-4 mt-5 flex sm:flex-row flex-col gap-6 max-w-[400px] w-full justify-between">
-          <Link href="/chat" className="hover:shadow-[2px_4px_16px_rgba(130,0,255,0.5)] flex items-center gap-2 text-xl font-semibold text-black bg-white rounded-lg px-5 py-4">
+          <Link
+            href="/chat"
+            className="hover:shadow-[2px_4px_16px_rgba(130,0,255,0.5)] flex items-center gap-2 text-xl font-semibold text-black bg-white rounded-lg px-5 py-4"
+          >
             <Waypoints />
             Get started
           </Link>
-          <button className="hover:shadow-[2px_4px_16px_rgba(130,0,255,0.5)] flex items-center gap-2 text-xl font-semibold border-2 bg-black border-white rounded-lg px-9 py-4">
+          <a
+            href="https://github.com/sumit-basak2208/heaven-hell-AI"
+            target="_blank"
+            className="hover:shadow-[2px_4px_16px_rgba(130,0,255,0.5)] flex items-center gap-2 text-xl font-semibold border-2 bg-black border-white rounded-lg px-9 py-4"
+          >
             <Github />
             Source
-          </button>
+          </a>
         </div>
       </div>
     </main>

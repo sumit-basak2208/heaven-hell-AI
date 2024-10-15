@@ -117,7 +117,7 @@ export default function Chat() {
       });
     } catch (err) {
       console.log(err);
-      notify("Failed to feetch data!", "error");
+      notify("Failed to fetch data!", "error");
     } finally {
       setLoading(false);
     }

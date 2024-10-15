@@ -40,7 +40,10 @@ export default function Chat() {
   }, [session]);
 
   useEffect(() => {
-    const handleKeyDown = () => {
+    const handleKeyDown = (ev:KeyboardEvent) => {
+      if (ev.ctrlKey || ev.altKey) {
+        return;
+      }
       if (promptRef.current) {
         promptRef.current.focus();
       }

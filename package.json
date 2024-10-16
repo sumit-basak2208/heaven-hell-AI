@@ -10,6 +10,9 @@
   },
   "dependencies": {
     "@google/generative-ai": "^0.21.0",
+    "@react-three/drei": "^9.114.4",
+    "@react-three/fiber": "^8.17.10",
+    "framer-motion": "^11.11.9",
     "lucide-react": "^0.451.0",
     "mongodb": "4.1",
     "mongoose": "^8.7.0",

@@ -1,15 +1,42 @@
-"use client";
+"use client"
+import { Stars } from "@react-three/drei";
+import { Canvas } from "@react-three/fiber";
+import React, { useEffect } from "react";
 import { Github, Waypoints } from "lucide-react";
+import {
+  useMotionTemplate,
+  useMotionValue,
+  motion,
+  animate,
+} from "framer-motion";
 import Link from "next/link";
 
+const COLORS_TOP = ["#FFAEBCa1", "#A0E7E5a1", "#B4F8C8a1", "#FBE7C6a1"];
+
 export default function Home() {
+  const color = useMotionValue(COLORS_TOP[0]);
+
+  useEffect(() => {
+    animate(color, COLORS_TOP, {
+      ease: "easeInOut",
+      duration: 10,
+      repeat: Infinity,
+      repeatType: "mirror",
+    });
+  }, []);
+
+  const backgroundImage = useMotionTemplate`radial-gradient(150% 150% at 50% 0%, #020617 50%, ${color})`;
+
   return (
-    <main className="text-white overflow-clip relative w-screen h-screen">
-      <div className="absolute w-[70px] h-[1600px] -top-[640px] -rotate-[35deg] bg-[#8200ff]/80 blur-[175px]"></div>
-      <div className="absolute md:block hidden w-[70px] h-[1600px] -top-[640px] right-0 rotate-[35deg] bg-[#8200ff]/80 blur-[175px]"></div>
-      <div className="container md:pt-[250px] pt-[200px] text-center gap-4 flex flex-col items-center justify-center relative z-10">
+    <motion.section
+      style={{
+        backgroundImage,
+      }}
+      className="relative grid min-h-screen place-content-center overflow-hidden bg-gray-950 px-4 py-24 text-gray-200"
+    >
+      <div className="relative z-10 flex flex-col items-center">
         <h1
-          className="md:text-7xl text-5xl font-bold bg-[linear-gradient(167deg,#F0F0F0_15.54%,#F4F4F4_43.53%,#FFF_48.02%,rgba(188,188,188,0.68)81.88%)] bg-clip-text"
+          className="md:text-7xl text-5xl font-semibold bg-[linear-gradient(167deg,#F0F0F0_15.54%,#F4F4F4_43.53%,#FFF_48.02%,rgba(188,188,188,0.68)81.88%)] bg-clip-text"
           style={{
             WebkitBackgroundClip: "text",
             WebkitTextFillColor: "transparent",
@@ -17,14 +44,14 @@ export default function Home() {
         >
           Heaven Hell AI
         </h1>
-        <h3 className="text-lg md:max-w-[700px] px-4 mx-w-[95vw]">
+        <p className="my-6 max-w-xl text-center text-base leading-relaxed md:text-lg md:leading-relaxed">
           Engage in insightful conversations with both a devil and an angel,
           offering balanced perspectives in a warm, professional environment.
-        </h3>
-        <div className="px-4 mt-5 flex sm:flex-row flex-col gap-6 max-w-[400px] w-full justify-between">
+        </p>
+        <div className="px-4 mt-5 flex sm:flex-row flex-col gap-6 justify-center w-full">
           <Link
+            className="hover:shadow-[2px_4px_16px_#color] flex items-center gap-2 font-semibold text-black bg-white rounded-lg px-5 py-2"
             href="/chat"
-            className="hover:shadow-[2px_4px_16px_rgba(130,0,255,0.5)] flex items-center gap-2 text-xl font-semibold text-black bg-white rounded-lg px-5 py-4"
           >
             <Waypoints />
             Get started
@@ -32,13 +59,19 @@ export default function Home() {
           <a
             href="https://github.com/sumit-basak2208/heaven-hell-AI"
             target="_blank"
-            className="hover:shadow-[2px_4px_16px_rgba(130,0,255,0.5)] flex items-center gap-2 text-xl font-semibold border-2 bg-black border-white rounded-lg px-9 py-4"
+            className="hover:shadow-[2px_4px_16px_#color] flex items-center gap-2 font-semibold border-2 bg-black border-white rounded-lg px-9 py-2"
           >
             <Github />
             Source
           </a>
         </div>
       </div>
-    </main>
+
+      <div className="absolute inset-0 z-0">
+        <Canvas>
+          <Stars radius={50} count={1000} factor={4} fade speed={2} />
+        </Canvas>
+      </div>
+    </motion.section>
   );
-}
+};

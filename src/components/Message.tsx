@@ -1,7 +1,7 @@
 import Image from "next/image";
-import angelLogo from "../app/assets/angel-logo.png";
-import devilLogo from "../app/assets/devil-logo.png";
-import userLogo from "../app/assets/user-logo.png";
+import angelLogo from "../app/assets/angel-logo.jpg";
+import devilLogo from "../app/assets/devil-logo.jpg";
+import userLogo from "../app/assets/user-logo.jpg";
 import Markdown from "react-markdown";
 
 export default function Message({

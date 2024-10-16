@@ -1,6 +1,5 @@
 "use client";
 import Image from "next/image";
-import hhBg from "../assets/hh-bg.jpg";
 import Message from "@/components/Message";
 import { SyntheticEvent, useEffect, useRef, useState } from "react";
 import { Message as Msg } from "@/types/message";
@@ -9,37 +8,14 @@ import { heavenBot } from "@/utils/heaven";
 import { hellBot } from "@/utils/hell";
 import { useRouter } from "next/navigation";
 import { signOut, useSession } from "next-auth/react";
-import angelLogo from "../assets/angel-logo.png";
-import devilLogo from "../assets/devil-logo.png";
+import angelLogo from "../assets/angel-logo.jpg";
+import devilLogo from "../assets/devil-logo.jpg";
 import BouncingDotLoader from "@/components/BouncingDotLoader";
-import {
-  useMotionTemplate,
-  useMotionValue,
-  motion,
-  animate,
-} from "framer-motion";
-import { Stars } from "@react-three/drei";
-import { Canvas } from "@react-three/fiber";
-
-const COLORS_TOP = ["#FFAEBCa1", "#A0E7E5a1", "#B4F8C8a1", "#FBE7C6a1"];
+import RootTheme from "@/components/RootTheme";
 
 export default function Chat() {
   const router = useRouter();
   const session = useSession();
-
-    const color = useMotionValue(COLORS_TOP[0]);
-
-  useEffect(() => {
-    animate(color, COLORS_TOP, {
-      ease: "easeInOut",
-      duration: 10,
-      repeat: Infinity,
-      repeatType: "mirror",
-    });
-  }, []);
-
-  const backgroundImage = useMotionTemplate`radial-gradient(150% 150% at 50% 0%, #020617 50%, ${color})`;
-
 
   const [heavenMessages, setHeavenMessages] = useState<Msg[]>();
   const [hellMessages, setHellMessages] = useState<Msg[]>();
@@ -166,24 +142,25 @@ export default function Chat() {
   };
 
   return (
-    <motion.main
-      style={{
-        backgroundImage,
-      }}
-      className="relative min-h-screen overflow-hidden bg-gray-950 text-gray-200"
-    >
+    <RootTheme className="">
       <main className="mt-[49px] text-white">
         <div className="flex">
           <button
             onClick={() => setActive("heaven")}
-            className="flex-1 text-lg py-3 bg-black/40 border-white border-b border-r"
+            className="flex gap-3 justify-center items-center flex-1 text-lg py-3 bg-black/40 border-white border-b border-r"
           >
+            <div className="relative border border-zinc-300 h-7 w-7 bg-white rounded-full overflow-hidden">
+              <Image fill alt="profile picture" src={angelLogo} />
+            </div>
             Heaven
           </button>
           <button
             onClick={() => setActive("hell")}
-            className="flex-1 text-lg py-3 bg-black/40 border-white border-b"
+            className="flex gap-3 justify-center items-center flex-1 text-lg py-3 bg-black/40 border-white border-b"
           >
+            <div className="relative border border-zinc-300 h-7 w-7 bg-white rounded-full overflow-hidden">
+              <Image fill alt="profile picture" src={devilLogo} />
+            </div>
             Hell
           </button>
         </div>
@@ -287,7 +264,7 @@ export default function Chat() {
             <textarea
               ref={promptRef}
               className="px-2 py-1 rounded-full bg-black text-white flex-1 border-0 outline-0"
-              placeholder="Enter text..."
+              placeholder="Enter message..."
               rows={1}
               onChange={(ev) => setPrompt(ev.target.value)}
               onKeyDown={onPromptKeydown}
@@ -330,11 +307,6 @@ export default function Chat() {
           </div>
         </form>
       </main>
-      <div className="absolute inset-0 z-0">
-        <Canvas>
-          <Stars radius={50} count={1000} factor={4} fade speed={2} />
-        </Canvas>
-      </div>
-    </motion.main>
+    </RootTheme>
   );
 }

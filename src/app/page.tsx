@@ -28,7 +28,7 @@ export default function Home() {
   const backgroundImage = useMotionTemplate`radial-gradient(150% 150% at 50% 0%, #020617 50%, ${color})`;
 
   return (
-    <motion.section
+    <motion.main
       style={{
         backgroundImage,
       }}
@@ -72,6 +72,6 @@ export default function Home() {
           <Stars radius={50} count={1000} factor={4} fade speed={2} />
         </Canvas>
       </div>
-    </motion.section>
+    </motion.main>
   );
 };

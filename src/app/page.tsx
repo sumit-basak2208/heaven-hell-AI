@@ -17,8 +17,9 @@ export default function Home() {
           Heaven Hell AI
         </h1>
         <p className="my-6 max-w-xl text-center text-base leading-relaxed md:text-lg md:leading-relaxed">
-          Engage in insightful conversations with both a devil and an angel,
-          offering balanced perspectives in a warm, professional environment.
+          A dynamic chatbot experience where users engage with both a devil and
+          an angel, offering contrasting perspectives in a balanced, engaging
+          conversation.
         </p>
         <div className="px-4 mt-5 flex sm:flex-row flex-col gap-6 justify-center w-full">
           <Link

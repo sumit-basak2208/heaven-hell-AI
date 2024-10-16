@@ -19,11 +19,11 @@ const geistMono = localFont({
 export const metadata: Metadata = {
   title: "Hell Heaven AI",
   description:
-    "Engage in insightful conversations with both a devil and an angel, offering balanced perspectives in a warm, professional environment.",
+    "A dynamic chatbot experience where users engage with both a devil and an angel, offering contrasting perspectives in a balanced, engaging conversation.",
   openGraph: {
     title: "Hell Heaven AI",
     description:
-      "Engage in insightful conversations with both a devil and an angel, offering balanced perspectives in a warm, professional environment.",
+      "A dynamic chatbot experience where users engage with both a devil and an angel, offering contrasting perspectives in a balanced, engaging conversation.",
     url: "https://heaven-hell-ai.vercel.app",
     images: [
       {
@@ -39,7 +39,7 @@ export const metadata: Metadata = {
     site: "@example",
     title: "Hell Heaven AI",
     description:
-      "Engage in insightful conversations with both a devil and an angel, offering balanced perspectives in a warm, professional environment.",
+      "A dynamic chatbot experience where users engage with both a devil and an angel, offering contrasting perspectives in a balanced, engaging conversation.",
     images: [
       {
         url: "https://heaven-hell-ai.vercel.app/preview.jpg",

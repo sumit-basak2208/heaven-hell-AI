@@ -7,7 +7,7 @@ export default function Home() {
     <main className="text-white overflow-clip relative w-screen h-screen">
       <div className="absolute w-[70px] h-[1600px] -top-[640px] -rotate-[35deg] bg-[#8200ff]/80 blur-[175px]"></div>
       <div className="absolute md:block hidden w-[70px] h-[1600px] -top-[640px] right-0 rotate-[35deg] bg-[#8200ff]/80 blur-[175px]"></div>
-      <div className="container md:pt-[250px] pt-[200px] text-center gap-4 flex flex-col items-center justify-center">
+      <div className="container md:pt-[250px] pt-[200px] text-center gap-4 flex flex-col items-center justify-center relative z-10">
         <h1
           className="md:text-7xl text-5xl font-bold bg-[linear-gradient(167deg,#F0F0F0_15.54%,#F4F4F4_43.53%,#FFF_48.02%,rgba(188,188,188,0.68)81.88%)] bg-clip-text"
           style={{

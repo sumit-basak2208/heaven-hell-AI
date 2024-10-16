@@ -40,7 +40,7 @@ export default function Chat() {
   }, [session]);
 
   useEffect(() => {
-    const handleKeyDown = (ev:KeyboardEvent) => {
+    const handleKeyDown = (ev: KeyboardEvent) => {
       if (ev.ctrlKey || ev.altKey) {
         return;
       }
@@ -118,6 +118,14 @@ export default function Chat() {
     } catch (err) {
       console.log(err);
       notify("Failed to fetch data!", "error");
+      setHeavenMessages((heavenMessages) => [
+        ...(heavenMessages ?? []),
+        { message: "Bot not responding", isBot: true },
+      ]);
+      setHellMessages((hellMessages) => [
+        ...(hellMessages ?? []),
+        { message: "Bot not responding", isBot: true },
+      ]);
     } finally {
       setLoading(false);
     }

@@ -57,34 +57,27 @@ export async function hellBot(message: string, history: Message[]) {
   try {
     const genAI = new GoogleGenerativeAI(process.env.NEXT_PUBLIC_GEMINI_KEY!);
     const model = genAI.getGenerativeModel({
-      model: "gemini-pro",
+      model: "gemini-1.5-flash-002",
       safetySettings: hellSafetySettings,
     });
-    if (history.length > 1) {
-      const chatHistory: Content[] = [];
-      history.forEach((chat) => {
-        if (chat.isBot) {
-          chatHistory.push({ role: "model", parts: [{ text: chat.message }] });
-        } else {
-          chatHistory.push({ role: "user", parts: [{ text: chat.message }] });
-        }
-      });
-      const chat = model.startChat({
-        history: chatHistory,
-      });
-      const result = await chat.sendMessage(`
+    const chatHistory: Content[] = [];
+    history.forEach((chat) => {
+      if (chat.isBot) {
+        chatHistory.push({ role: "model", parts: [{ text: chat.message }] });
+      } else {
+        chatHistory.push({ role: "user", parts: [{ text: chat.message }] });
+      }
+    });
+    const chat = model.startChat({
+      history: chatHistory,
+    });
+    const result = await chat.sendMessage(`
         ${hellPrompt}
 
         ${message}`);
-      return result.response.text() || "";
-    } else {
-      const result = await model.generateContentStream(`
-        ${hellPrompt}
-        
-        ${message}`);
-      const res = await result.response;
-      return res.text() || "";
-    }
+    const text = result.response.text();
+    if (!text) throw new Error("Bot not responding!!");
+    return text;
   } catch (err) {
     console.log(err);
     throw new Error("Bot not responding!!");

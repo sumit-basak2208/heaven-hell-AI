@@ -166,7 +166,7 @@ export default function Chat() {
         </div>
         <div className="flex">
           <section
-            className={`md:block ${
+            className={`md:!block ${
               active == "heaven" ? "block" : "hidden"
             } flex-1 overflow-auto h-[calc(100dvh-160px)] py-3 border-r border-white scrollbar scrollbar-none scrollbar-track-none`}
             id="heaven"
@@ -211,7 +211,7 @@ export default function Chat() {
             </div>
           </section>
           <section
-            className={`md:block ${
+            className={`md:!block ${
               active == "hell" ? "block" : "hidden"
             } flex-1 overflow-auto h-[calc(100dvh-160px)] py-3 scrollbar scrollbar-none scrollbar-track-none`}
             id="hell"
